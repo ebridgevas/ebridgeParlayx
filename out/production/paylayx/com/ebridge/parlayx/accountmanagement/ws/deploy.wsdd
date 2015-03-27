@@ -1,0 +1,112 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from AccountManagementService WSDL service -->
+
+  <service name="AccountManagement" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://www.csapi.org/wsdl/parlayx/account_management/v2_2/service"/>
+      <parameter name="wsdlServiceElement" value="AccountManagementService"/>
+      <parameter name="schemaQualified" value="http://www.csapi.org/schema/parlayx/account_management/v2_2/local"/>
+      <parameter name="schemaUnqualified" value="http://www.csapi.org/schema/parlayx/account_management/v2_2,http://www.csapi.org/schema/parlayx/common/v2_1"/>
+      <parameter name="wsdlServicePort" value="AccountManagement"/>
+      <parameter name="className" value="com.ebridge.parlayx.accountmanagement.ws.AccountManagementBindingImpl"/>
+      <parameter name="wsdlPortType" value="AccountManagement"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="getBalance" qname="operNS:getBalance" xmlns:operNS="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" returnQName="retNS:result" xmlns:retNS="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" returnType="rtns:Balance" xmlns:rtns="http://www.csapi.org/schema/parlayx/account_management/v2_2" soapAction="" >
+        <parameter qname="pns:endUserIdentifier" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:endUserPin" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="PolicyException" qname="fns:PolicyException" xmlns:fns="http://www.csapi.org/schema/parlayx/common/v2_1" class="com.ebridge.parlayx.accountmanagement.ws.PolicyException" type="tns:PolicyException" xmlns:tns="http://www.csapi.org/schema/parlayx/common/v2_1"/>
+        <fault name="ServiceException" qname="fns:ServiceException" xmlns:fns="http://www.csapi.org/schema/parlayx/common/v2_1" class="com.ebridge.parlayx.accountmanagement.ws.ServiceException" type="tns:ServiceException" xmlns:tns="http://www.csapi.org/schema/parlayx/common/v2_1"/>
+      </operation>
+      <operation name="getCreditExpiryDate" qname="operNS:getCreditExpiryDate" xmlns:operNS="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" returnQName="retNS:result" xmlns:retNS="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" returnType="rtns:BalanceExpireDetails" xmlns:rtns="http://www.csapi.org/schema/parlayx/account_management/v2_2" soapAction="" >
+        <parameter qname="pns:endUserIdentifier" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:anyURI" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:endUserPin" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="PolicyException" qname="fns:PolicyException" xmlns:fns="http://www.csapi.org/schema/parlayx/common/v2_1" class="com.ebridge.parlayx.accountmanagement.ws.PolicyException" type="tns:PolicyException" xmlns:tns="http://www.csapi.org/schema/parlayx/common/v2_1"/>
+        <fault name="ServiceException" qname="fns:ServiceException" xmlns:fns="http://www.csapi.org/schema/parlayx/common/v2_1" class="com.ebridge.parlayx.accountmanagement.ws.ServiceException" type="tns:ServiceException" xmlns:tns="http://www.csapi.org/schema/parlayx/common/v2_1"/>
+      </operation>
+      <operation name="balanceUpdate" qname="operNS:balanceUpdate" xmlns:operNS="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" soapAction="" >
+        <parameter qname="pns:endUserIdentifier" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:endUserPin" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:referenceCode" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:balanceType" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:amount" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:decimal" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:period" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="PolicyException" qname="fns:PolicyException" xmlns:fns="http://www.csapi.org/schema/parlayx/common/v2_1" class="com.ebridge.parlayx.accountmanagement.ws.PolicyException" type="tns:PolicyException" xmlns:tns="http://www.csapi.org/schema/parlayx/common/v2_1"/>
+        <fault name="ServiceException" qname="fns:ServiceException" xmlns:fns="http://www.csapi.org/schema/parlayx/common/v2_1" class="com.ebridge.parlayx.accountmanagement.ws.ServiceException" type="tns:ServiceException" xmlns:tns="http://www.csapi.org/schema/parlayx/common/v2_1"/>
+      </operation>
+      <operation name="voucherUpdate" qname="operNS:voucherUpdate" xmlns:operNS="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" soapAction="" >
+        <parameter qname="pns:endUserIdentifier" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:anyURI" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:endUserPin" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:referenceCode" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:voucherIdentifier" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:voucherPin" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="PolicyException" qname="fns:PolicyException" xmlns:fns="http://www.csapi.org/schema/parlayx/common/v2_1" class="com.ebridge.parlayx.accountmanagement.ws.PolicyException" type="tns:PolicyException" xmlns:tns="http://www.csapi.org/schema/parlayx/common/v2_1"/>
+        <fault name="ServiceException" qname="fns:ServiceException" xmlns:fns="http://www.csapi.org/schema/parlayx/common/v2_1" class="com.ebridge.parlayx.accountmanagement.ws.ServiceException" type="tns:ServiceException" xmlns:tns="http://www.csapi.org/schema/parlayx/common/v2_1"/>
+      </operation>
+      <operation name="getHistory" qname="operNS:getHistory" xmlns:operNS="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" returnQName="retNS:result" xmlns:retNS="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" returnType="rtns:DatedTransaction" xmlns:rtns="http://www.csapi.org/schema/parlayx/account_management/v2_2" soapAction="" >
+        <parameter qname="pns:endUserIdentifier" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:anyURI" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:endUserPin" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:date" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:maxEntries" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="PolicyException" qname="fns:PolicyException" xmlns:fns="http://www.csapi.org/schema/parlayx/common/v2_1" class="com.ebridge.parlayx.accountmanagement.ws.PolicyException" type="tns:PolicyException" xmlns:tns="http://www.csapi.org/schema/parlayx/common/v2_1"/>
+        <fault name="ServiceException" qname="fns:ServiceException" xmlns:fns="http://www.csapi.org/schema/parlayx/common/v2_1" class="com.ebridge.parlayx.accountmanagement.ws.ServiceException" type="tns:ServiceException" xmlns:tns="http://www.csapi.org/schema/parlayx/common/v2_1"/>
+      </operation>
+      <operation name="getBalanceTypes" qname="operNS:getBalanceTypes" xmlns:operNS="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" returnQName="retNS:result" xmlns:retNS="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:endUserIdentifier" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:endUserPin" xmlns:pns="http://www.csapi.org/schema/parlayx/account_management/v2_2/local" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="PolicyException" qname="fns:PolicyException" xmlns:fns="http://www.csapi.org/schema/parlayx/common/v2_1" class="com.ebridge.parlayx.accountmanagement.ws.PolicyException" type="tns:PolicyException" xmlns:tns="http://www.csapi.org/schema/parlayx/common/v2_1"/>
+        <fault name="ServiceException" qname="fns:ServiceException" xmlns:fns="http://www.csapi.org/schema/parlayx/common/v2_1" class="com.ebridge.parlayx.accountmanagement.ws.ServiceException" type="tns:ServiceException" xmlns:tns="http://www.csapi.org/schema/parlayx/common/v2_1"/>
+      </operation>
+      <parameter name="allowedMethods" value="balanceUpdate getBalance getCreditExpiryDate getBalanceTypes voucherUpdate getHistory"/>
+
+      <typeMapping
+        xmlns:ns="http://www.csapi.org/schema/parlayx/account_management/v2_2"
+        qname="ns:Balance"
+        type="java:com.ebridge.parlayx.accountmanagement.ws.Balance"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://www.csapi.org/schema/parlayx/common/v2_1"
+        qname="ns:ServiceException"
+        type="java:com.ebridge.parlayx.accountmanagement.ws.ServiceException"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://www.csapi.org/schema/parlayx/account_management/v2_2"
+        qname="ns:DatedTransaction"
+        type="java:com.ebridge.parlayx.accountmanagement.ws.DatedTransaction"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://www.csapi.org/schema/parlayx/common/v2_1"
+        qname="ns:PolicyException"
+        type="java:com.ebridge.parlayx.accountmanagement.ws.PolicyException"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://www.csapi.org/schema/parlayx/account_management/v2_2"
+        qname="ns:BalanceExpireDetails"
+        type="java:com.ebridge.parlayx.accountmanagement.ws.BalanceExpireDetails"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>
